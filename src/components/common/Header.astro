@@ -1,10 +1,39 @@
 ---
-
+import PaletteToggle from "./PaletteToggle.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import { Languages } from "lucide-astro";
+import NavLink from "./NavLink.astro";
 ---
-<header>
-    <a href="#home">Inicio</a>
-    <a href="#about-me">Sobre mi</a>
-    <a href="#education-experience">Educacion y Experiencia</a>
-    <a href="#skills">Habilidades</a>
-    <a href="#projects">Proyectos</a>
+<header class="sticky top-0 z-50 w-full backdrop-blur-md bg-zinc-950/80 dark:bg-zinc-950/80 dark:border-zinc-800/60 border-b border-zinc-200/80 transition-colors">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+    <a href="/" class="text-lg font-bold tracking-tight text-zinc-900 dark:text-white hover:text-emerald-500 transition-colors flex items-center gap-1.5">
+      Ivan F. Calle<span class="text-emerald-500 font-extrabold">.</span>
+    </a>
+
+    {/* Navegación Principal */}
+    <nav class="hidden md:flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900/60 p-1.5 rounded-full border border-zinc-200 dark:border-zinc-800/80 text-sm font-medium text-zinc-600 dark:text-zinc-400">
+        <NavLink href="#home">Inicio</NavLink>
+        <NavLink href="#about-me">Sobre mí</NavLink>
+        <NavLink href="#education">Educacion</NavLink>
+        <NavLink href="#experience">Experiencia</NavLink>
+        <NavLink href="#skills">Habilidades</NavLink>
+        <NavLink href="#projects">Proyectos</NavLink>
+    </nav>
+
+    {/* Barra de Controles */}
+    <div class="flex items-center gap-2 sm:gap-3">
+      {/* 1. Selector de Idioma (ES / EN) */}
+      <button type="button" aria-label="Cambiar idioma"
+        class="flex items-center gap-1.5 text-xs font-mono px-2.5 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 text-zinc-700 dark:text-zinc-300 hover:border-emerald-500/40 hover:text-emerald-500 transition-all cursor-pointer">
+        <Languages class="w-3.5 h-3.5 text-emerald-500" />
+        <span>ES</span>
+      </button>
+
+      {/* 2. Selector de Paleta de Color de Acento */}
+      <PaletteToggle />
+
+      {/* 3. Conmutador de Modo Oscuro / Claro */}
+      <ThemeToggle />
+    </div>
+  </div>
 </header>
