@@ -2,27 +2,52 @@
 import { Palette } from "lucide-astro";
 
 const accentThemes = [
-  { value: 'bg-emerald-500', name: 'Esmeralda' },
-  { value: 'bg-amber-500', name: 'Ámbar' },
-  { value: 'bg-cyan-500', name: 'Cian' },
-  { value: 'bg-lime-500', name: 'Lima' },
-  { value: 'bg-purple-500', name: 'Púrpura' },
-  { value: 'bg-red-500', name: 'Rojo' }
+  { id: 'emerald', bgClass: 'bg-emerald-500', name: 'Esmeralda' },
+  { id: 'indigo', bgClass: 'bg-indigo-500', name: 'Indigo' },
+  { id: 'cyan', bgClass: 'bg-cyan-500', name: 'Cian' },
+  { id: 'teal', bgClass: 'bg-teal-500', name: 'Teal' },
+  { id: 'green', bgClass: 'bg-green-500', name: 'Verde' }
 ];
 ---
 
 <div class="relative group">
-  <button type="button" aria-label="Seleccionar color de acento"
-    class="p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 text-zinc-700 dark:text-zinc-300 hover:border-emerald-500/40 hover:text-emerald-500 transition-all cursor-pointer flex items-center justify-center">
+  <button 
+    type="button" 
+    aria-label="Seleccionar color de acento"
+    class="p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 text-zinc-700 dark:text-zinc-300 hover:border-(--accent-border) hover:text-(--accent) transition-all cursor-pointer flex items-center justify-center">
     <Palette class="w-4 h-4" />
   </button>
 
   <div class="absolute right-0 top-full mt-2 hidden group-hover:flex group-focus-within:flex p-2 bg-white dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl backdrop-blur-md gap-2 z-50">
     {accentThemes.map((theme) => (
-      <button type="button" title={theme.name} aria-label={`Cambiar acento a color ${theme.name}`}
-        class="w-5 h-5 rounded-full transition-transform hover:scale-125 focus:outline-none cursor-pointer relative flex items-center justify-center">
-        <span class={`w-full h-full rounded-full ${theme.value} inline-block ring-2 ring-transparent hover:ring-zinc-400 dark:hover:ring-white/50 transition-all`}></span>
+      <button
+        type="button"
+        data-accent-btn={theme.id}
+        title={theme.name}
+        aria-label={`Cambiar acento a color ${theme.name}`}
+        class="w-5 h-5 rounded-full transition-transform hover:scale-125 focus:outline-none cursor-pointer flex items-center justify-center"
+      >
+        <span class={`w-full h-full rounded-full ${theme.bgClass} inline-block`}></span>
       </button>
     ))}
   </div>
 </div>
+
+<script is:inline>
+  const savedAccent = localStorage.getItem('accent') || 'emerald';
+  document.documentElement.setAttribute('data-accent', savedAccent);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const accentBtns = document.querySelectorAll('[data-accent-btn]');
+    
+    accentBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const selectedAccent = btn.getAttribute('data-accent-btn');
+        if (selectedAccent) {
+          document.documentElement.setAttribute('data-accent', selectedAccent);
+          localStorage.setItem('accent', selectedAccent);
+        }
+      });
+    });
+  });
+</script>

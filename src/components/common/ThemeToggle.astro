@@ -8,3 +8,25 @@ import { Sun, Moon } from "lucide-astro";
   {/* Icono de Luna para cuando esté en Modo Claro */}
   <Moon class="w-4 h-4 block dark:hidden text-zinc-700 hover:text-emerald-600" />
 </button>
+
+<script is:inline>
+  const btn = document.getElementById('dark-mode-toggle');
+
+  const updateTheme = () => {
+    const theme = localStorage.getItem('theme');
+    if(theme === 'dark'){
+      document.documentElement.classList.add('dark');
+      console.log('Se cambio a tema oscuro');
+    }else{
+      document.documentElement.classList.remove('dark');
+      console.log('Se cambio a tema claro');
+    }
+  }
+
+  updateTheme();
+
+  btn.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark': 'light');
+  });
+</script>
