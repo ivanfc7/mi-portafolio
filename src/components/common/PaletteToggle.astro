@@ -14,11 +14,11 @@ const accentThemes = [
   <button 
     type="button" 
     aria-label="Seleccionar color de acento"
-    class="p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 text-zinc-700 dark:text-zinc-300 hover:border-(--accent-border) hover:text-(--accent) transition-all cursor-pointer flex items-center justify-center">
-    <Palette class="w-4 h-4" />
+    class="px-2.5 py-1.5 rounded-lg border border-(--border) bg-(--bg-surface) text-(--text-muted) hover:border-(--accent-border) hover:text-(--accent) transition-all cursor-pointer flex items-center justify-center">
+    <Palette class="w-4 h-4 text-(--accent)" />
   </button>
 
-  <div class="absolute right-0 top-full mt-2 hidden group-hover:flex group-focus-within:flex p-2 bg-white dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl backdrop-blur-md gap-2 z-50">
+  <div class="absolute right-0 top-full mt-2 hidden group-hover:flex group-focus-within:flex p-2 bg-(--bg-card) border border-(--border) rounded-xl shadow-xl backdrop-blur-md gap-2 z-50">
     {accentThemes.map((theme) => (
       <button
         type="button"

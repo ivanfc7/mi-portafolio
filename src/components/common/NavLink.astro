@@ -5,7 +5,7 @@ interface Props {
 const { href } = Astro.props;
 const id = href.replace('#','');
 ---
-<a data-section={id} href={href} class="px-3 py-1.5 rounded-full hover:text-zinc-900 dark:hover:text-white transition-all">
+<a data-section={id} href={href} class="px-3 py-1.5 rounded-full hover:text-(--text-nav-hover) transition-all">
     <slot />
 </a>
 
@@ -18,8 +18,8 @@ const id = href.replace('#','');
             const id = entry.target.getAttribute('id');
             const link = document.querySelector(`a[data-section="${id}"]`);
             if(entry.isIntersecting){
-                links.forEach(l => l.classList.remove('text-zinc-900', 'dark:text-white', 'bg-white', 'dark:bg-zinc-800/80'));
-                link?.classList.add('text-zinc-900', 'dark:text-white', 'bg-white', 'dark:bg-zinc-800/80');
+                links.forEach(l => l.classList.remove('text-(--text-nav-active)', 'bg-(--bg-nav-active)'));
+                link?.classList.add('text-(--text-nav-active)', 'bg-(--bg-nav-active)');
             }
         });
     }, {rootMargin: "-40% 0px -60% 0px"})

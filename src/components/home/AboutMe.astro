@@ -1,12 +1,42 @@
 ---
+import { Wrench, Monitor, Cpu, Heart, Code2 } from "lucide-astro";
 ---
 <section id="about-me" class="flex flex-col justify-center items-start py-20 gap-4">
-    <h3 class="text-2xl sm:text-5xl font-bold tracking-tight text-emerald-400">Sobre mi</h3>
-    <p class="text-lg text-zinc-400 max-w-xl leading-relaxed whitespace-pre-line">
-        Soy egresado de la carrera de Ingenieria en Sistemas. Soy un desarrollador que se ha formado en la Universidad Mayor de San Simon ademas de tener el gusto por la formacion autodidacta. 
-        
-        En los ultimos dos años he comenzado a completar mis habilidades primero desde la perspectiva del desarrollo escalable con codigo limpio y mantenible. Luego he empezado a formarme con las tecnologias modernas entendiendo que funcion y para que tipo de sistema se adaptan cada una de las tecnologias de desarrollo existentes hoy en dia. 
+    <h3 class="text-2xl sm:text-5xl font-bold tracking-tight text-(--accent)">Sobre mi</h3>
+    <p class="text-lg text-(--text-muted) max-w-xl leading-relaxed whitespace-pre-line">
+        Soy egresado de la carrera de Ingeniería en Sistemas. Soy un desarrollador que se ha formado en la Universidad Mayor de San Simón, además de tener el gusto por la formación autodidacta.
 
-        Ahora busco nuevas oportunidades y retos para demostrarme que cada aprendizaje puede rendir sus frutos ademas de seguir desarrollando de forma constante diversos sistemas donde la creatividad me permita implementar soluciones o complementos a diferentes situaciones de la vida que podrian necesitar de un software. 
+        En los últimos dos años he comenzado a completar mis habilidades, primero desde la perspectiva del desarrollo escalable con código limpio y mantenible. Luego he empezado a formarme con las tecnologías modernas, entendiendo qué utilidad y para qué tipo de sistema se adaptan cada una de las tecnologías de desarrollo existentes hoy en día.
+        
+        Ahora busco nuevas oportunidades y retos para demostrarme que cada aprendizaje empieza a rendir sus frutos, además de seguir desarrollando de forma constante diversos sistemas donde la creatividad me permita implementar soluciones o complementos a diferentes situaciones de la vida que podrían necesitar de un software.
     </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-4">
+        <div class="p-5 rounded-2xl border border-(--border) bg-(--bg-surface) hover:bg-(--bg-card) transition-all duration-300">
+          <div class="w-10 h-10 rounded-xl bg-(--accent)/10 flex items-center justify-center text-(--accent) mb-3">
+            <Wrench class="w-5 h-5" />
+          </div>
+          <h3 class="text-base font-semibold text-(--text) mb-1">Hardware & Soporte</h3>
+          <p class="text-xs text-(--text-muted) leading-relaxed">
+            Conozco y me ha gustado el tema de ensamblaje, diagnóstico y mantenimiento preventivo/correctivo de computadoras. 
+          </p>
+        </div>
+        <div class="p-5 rounded-2xl border border-(--border) bg-(--bg-surface) hover:bg-(--bg-card) transition-all duration-300">
+          <div class="w-10 h-10 rounded-xl bg-(--accent)/10 flex items-center justify-center text-(--accent) mb-3">
+            <Code2 class="w-5 h-5" />
+          </div>
+          <h3 class="text-base font-semibold text-(--text) mb-1">Desarrollo Web y videojuegos</h3>
+          <p class="text-xs text-(--text-muted) leading-relaxed">
+            Enfoque en soluciones prácticas desde el desarrollo web. Ademas de que tengo cierto interes en desarrollar videojuegos educativos ya sea en la web o en aplicaciones de escritorio.
+          </p>
+        </div>
+        <div class="p-5 rounded-2xl border border-(--border) bg-(--bg-surface) hover:bg-(--bg-card) transition-all duration-300">
+          <div class="w-10 h-10 rounded-xl bg-(--accent)/10 flex items-center justify-center text-(--accent) mb-3">
+            <Heart class="w-5 h-5" />
+          </div>
+          <h3 class="text-base font-semibold text-(--text) mb-1">Mis pasatiempos</h3>
+          <p class="text-xs text-(--text-muted) leading-relaxed">
+            Apasionado de la tecnología en general, la música, la literatura; particularmente en leer ciencia ficción y en la escritura de cuentos y poemas.
+          </p>
+        </div>
+      </div>
 </section>

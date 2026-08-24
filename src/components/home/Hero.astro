@@ -1,23 +1,45 @@
 ---
+import { Github, Linkedin, FileDown, Mail,ArrowUpRight } from "lucide-astro"
 ---
 <section id="home" class="flex flex-col justify-center items-center py-20 gap-4">
-    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
-      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-(--accent)/10 border border-(--accent-border) text-(--accent) text-xs font-mono">
+      <span class="w-2 h-2 rounded-full bg-(--accent) animate-pulse"></span>
       Disponible para trabajar
     </span>
   
-    <h1 class="text-5xl sm:text-7xl font-bold tracking-tight text-(var(--text))">
-      Hola, soy <span class="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 via-teal-300 to-green-500">Ivan</span>
+    <h1 class="text-5xl sm:text-7xl font-bold tracking-tight text-(--text)">
+      Hola, soy <span class="text-transparent bg-clip-text bg-linear-to-r from-(--accent-from) via-(--accent-via) to-(--accent-to)">Ivan</span>
     </h1>
   
-    <p class="text-lg text-zinc-400 max-w-xl leading-relaxed text-center">
+    <p class="text-lg text-(--text-muted) max-w-xl leading-relaxed text-center">
       Desarrollador Web enfocado en crear sistemas que combinen la sencillez y la eficiencia. 
     </p>
   
-    <div class="flex flex-wrap gap-4 mt-6">
-      <a href="/cv-ivanflorescalle.pdf" target="_blank" 
-        class="px-6 py-3 rounded-xl bg-(--accent) text-zinc-950 font-semibold hover:bg-emerald-400 transition-all duration-300 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5" > Descargar CV </a>
-      <a href="mailto:ivanflorescalle128@gmail.com"
-        class="px-6 py-3 rounded-xl border border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-emerald-500/40 hover:text-white transition-all duration-300"> Contactame </a>
+    <div class="flex flex-wrap gap-4 mt-8">
+      <a 
+        href="/cv-ivanflorescalle.pdf" 
+        target="_blank" 
+        class="group px-6 py-3 rounded-xl bg-(--accent) text-zinc-950 font-semibold hover:opacity-95 transition-all duration-300 shadow-(--accent-shadow) hover:-translate-y-0.5 flex items-center gap-2"
+      > 
+        <FileDown class="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
+        <span>Descargar CV</span>
+      </a>
+      <a 
+        href="mailto:ivanflorescalle128@gmail.com"
+        class="group px-6 py-3 rounded-xl border border-(--border) bg-(--bg-surface) text-(--text-muted) hover:text-(--text) hover:border-(--accent-border) hover:bg-(--bg-card) transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
+      > 
+        <Mail class="w-4 h-4 text-(--accent)" />
+        <span>Contáctame</span>
+        <ArrowUpRight class="w-3.5 h-3.5 opacity-60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      </a>
+    </div>
+    <div class="flex items-center gap-3 mt-6 pt-6 border-t border-(--border)">
+      <span class="text-xs font-mono text-(--text-muted)">Redes:</span>
+      <a href="https://github.com/ivanfc7" target="_blank" aria-label="GitHub" class="p-2 rounded-lg text-(--text-muted) hover:text-(--text) hover:bg-(--bg-surface) transition-colors">
+        <Github class="w-5 h-5" />
+      </a>
+      <a href="https://www.linkedin.com/in/ivan-f-calle/" target="_blank" aria-label="LinkedIn" class="p-2 rounded-lg text-(--text-muted) hover:text-(--text) hover:bg-(--bg-surface) transition-colors">
+        <Linkedin class="w-5 h-5" />
+      </a>
     </div>
 </section>
