@@ -1,8 +1,9 @@
 ---
 import PaletteToggle from "./PaletteToggle.astro";
 import ThemeToggle from "./ThemeToggle.astro";
-import { Languages } from "lucide-astro";
+import LanguageToggle from "./LanguageToggle.astro";
 import NavLink from "./NavLink.astro";
+import { Menu, X } from "lucide-astro";
 ---
 <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-(--bg-header) transition-colors">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
@@ -11,7 +12,7 @@ import NavLink from "./NavLink.astro";
     </a>
 
     {/* Navegación Principal */}
-    <nav class="hidden md:flex items-center gap-1bg-(--bg-surface) p-1.5 rounded-full border border-(--border) text-sm font-medium text-(--text-muted)">
+    <nav class="hidden md:flex items-center gap-1 bg-(--bg-surface) p-1.5 rounded-full border border-(--border) text-sm font-medium text-(--text-muted)">
         <NavLink href="#home">Inicio</NavLink>
         <NavLink href="#about-me">Sobre mí</NavLink>
         <NavLink href="#education">Educación</NavLink>
@@ -20,20 +21,70 @@ import NavLink from "./NavLink.astro";
         <NavLink href="#projects">Proyectos</NavLink>
     </nav>
 
-    {/* Barra de Controles */}
     <div class="flex items-center gap-2 sm:gap-3">
-      {/* 1. Selector de Idioma (ES / EN) */}
-      <button type="button" aria-label="Cambiar idioma"
-        class="flex items-center gap-1.5 text-xs font-mono px-2.5 py-1.5 rounded-lg border border-(--border) bg-(--bg-surface) text-(--text-muted) hover:border-(--accent-border) hover:text-(--accent) transition-all cursor-pointer">
-        <Languages class="w-3.5 h-3.5 text-(--accent)" />
-        <span>ES</span>
-      </button>
-
-      {/* 2. Selector de Paleta de Color de Acento */}
+      <LanguageToggle />
       <PaletteToggle />
-
-      {/* 3. Conmutador de Modo Oscuro / Claro */}
       <ThemeToggle />
+
+      {/* Botón Hamburguesa (Solo Móvil) */}
+      <button type="button" id="mobile-menu-btn" aria-label="Abrir menú de navegación"
+        class="md:hidden px-2.5 py-1.5 rounded-lg border border-(--border) bg-(--bg-surface) text-(--text-muted) hover:text-(--text) hover:border-(--accent-border) transition-all cursor-pointer flex items-center justify-center">
+        <Menu class="w-5 h-4 icon-menu" />
+        <X class="w-5 h-4 icon-close hidden" />
+      </button>
     </div>
   </div>
+
+  {/* Menú Desplegable (Solo Móvil) */}
+  <div id="mobile-menu" class="hidden md:hidden border-b border-(--border) bg-(--bg-header) backdrop-blur-md px-4 py-4 transition-all duration-300">
+    <nav class="flex flex-col gap-1.5 text-sm font-medium text-(--text-muted)">
+      <NavLink href="#home">Inicio</NavLink>
+      <NavLink href="#about-me">Sobre mí</NavLink>
+      <NavLink href="#education">Educación</NavLink>
+      <NavLink href="#experience">Experiencia</NavLink>
+      <NavLink href="#skills">Habilidades</NavLink>
+      <NavLink href="#projects">Proyectos</NavLink>
+    </nav>
+  </div>
 </header>
+<script>
+  function setupMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu') ;
+    const iconClose = btn?.querySelector('.icon-close');
+    const iconMenu = btn?.querySelector('.icon-menu');
+    const mobileLinks = menu?.querySelectorAll('a');
+
+    if( !btn && !menu ) return;
+
+    const toggleMenu = () => {
+      const isHidden = menu?.classList.contains('hidden');
+      
+      if (isHidden) {
+        menu?.classList.remove('hidden');
+        iconMenu?.classList.add('hidden');
+        iconClose?.classList.remove('hidden');
+        btn?.setAttribute('aria-label', 'Cerrar menú de navegación');
+      } else {
+        menu?.classList.add('hidden');
+        iconMenu?.classList.remove('hidden');
+        iconClose?.classList.add('hidden');
+        btn?.setAttribute('aria-label', 'Abrir menú de navegación');
+      }
+    };
+
+    btn?.addEventListener('click', toggleMenu);
+
+    // Cerrar el menú automáticamente al hacer clic en un enlace
+    mobileLinks?.forEach(link => {
+      link.addEventListener('click', () => {
+        if (!menu?.classList.contains('hidden')) {
+          toggleMenu();
+        }
+      });
+    });
+  }
+
+  setupMobileMenu();
+  document.addEventListener('astro:after-swap', setupMobileMenu);
+</script>
