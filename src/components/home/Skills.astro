@@ -1,0 +1,81 @@
+---
+import { SKILL_CATEGORIES } from "../../data/skills";
+import { Code2, Layout, Wrench, Users, Server, Sparkles} from "lucide-astro";
+
+const getCategoryIcon = (index: number) => {
+  switch (index) {
+    case 0: return Code2;
+    case 1: return Layout;
+    case 2: return Server;
+    case 3: return Wrench;
+    default: return Sparkles;
+  }
+};
+---
+
+<section id="skills" class="py-16 flex flex-col items-start gap-8">
+    <div class="space-y-2">
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-(--accent)">
+        Habilidades Tecnicas
+      </h2>
+      <p class="text-sm sm:text-base text-(--text-muted) max-w-2xl">
+        Tecnologías, herramientas y aptitudes que conocí en mi formación universitaria y utilizo para transformar ideas en software.
+      </p>
+    </div>
+
+  {/* Grid de Categorías */}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+    {SKILL_CATEGORIES.map((category, index) => {
+      const IconComponent = getCategoryIcon(index);
+      const isSoftSkills = !category.skills.some(s => s.icon);
+
+      return (
+        <div 
+          class={`p-6 rounded-2xl border border-(--border) bg-(--bg-surface) hover:bg-(--bg-card) transition-all duration-300 shadow-xs flex flex-col justify-between ${
+            isSoftSkills ? "md:col-span-2 border-dashed border-(--accent-border)/60 bg-(--accent)/5" : ""
+          }`}
+        >
+          <div>
+            {/* Título de la Categoría */}
+            <div class="flex items-center gap-2 mb-4">
+                <div class="p-2.5 rounded-xl bg-(--accent)/10 text-(--accent) group-hover:scale-110 transition-transform duration-300">
+                    {isSoftSkills ? (
+                        <Users class="w-5 h-5" />
+                    ) : (                      
+                        <IconComponent class="w-5 h-5" />
+                    )}
+                </div>
+              <h3 class="text-lg font-bold text-(--text)">
+                {category.title}
+              </h3>
+            </div>
+
+            {/* Renderizado de Badges */}
+            <div class={`flex flex-wrap ${isSoftSkills ? "gap-3" : "gap-2 mt-3"}`}>
+              {category.skills.map((skill) => (
+                <div 
+                  class={`inline-flex items-center gap-2.5 px-3 py-2 rounded-xl border text-xs sm:text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 ${
+                    isSoftSkills 
+                      ? "border-(--accent-border) bg-(--bg) text-(--text) px-4 py-2.5 shadow-xs" 
+                      : "border-(--border) bg-(--bg) text-(--text-muted) hover:text-(--text) hover:border-(--accent)"
+                  }`}
+                >
+                  {/* Icono individual de SkillIcons */}
+                  {skill.icon && (
+                    <img 
+                      src={`https://skillicons.dev/icons?i=${skill.icon}`} 
+                      alt={skill.name}
+                      class="w-5 h-5 object-contain"
+                      loading="lazy"
+                    />
+                  )}
+                  <span>{skill.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</section>
