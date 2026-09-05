@@ -1,0 +1,173 @@
+---
+import { EducationList, type EducationType } from "../../data/education";
+import { GraduationCap, Eye, X, BookOpen, Trophy } from "lucide-astro";
+
+const categories: { label: string; value: string }[] = [
+  { label: "Todos", value: "all" },
+  { label: "Educación Superior", value: "principal" },
+  { label: "Cursos", value: "curso" },
+  { label: "Competencias", value: "competencia" }
+];
+
+const getTypeBadge = (type: EducationType) => {
+  switch (type) {
+    case 'principal': return { label: 'Educación Superior', icon: GraduationCap, color: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' };
+    case 'curso': return { label: 'Curso', icon: BookOpen, color: 'bg-blue-500/10 text-blue-500 border-blue-500/20' };
+    case 'competencia': return { label: 'Competencia', icon: Trophy, color: 'bg-amber-500/10 text-amber-500 border-amber-500/20' };
+  }
+};
+---
+
+<section id="education" class="py-16 flex flex-col items-start gap-8">
+    <div class="space-y-2">
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-(--accent)">
+          Educación
+        </h2>
+        <p class="text-sm text-(--text-muted)">
+            Mis estudios y formación academica
+        </p>
+    </div>
+    {/* Filtros Interactivos */}
+  <div class="flex flex-wrap gap-2" id="filter-buttons">
+    {categories.map((cat, index) => (
+      <button
+        data-filter={cat.value}
+        class={`px-4 py-2 text-xs sm:text-sm font-medium border-b transition-all duration-200 cursor-pointer ${
+          index === 0
+            ? "active-filter border-(--accent) text-(--accent)"
+            : "border-(--border) bg-(--bg-surface) text-(--text-muted) hover:text-(--text) hover:border-(--accent-border)"
+        }`}
+      >
+        {cat.label}
+      </button>
+    ))}
+  </div>
+
+  <div class="w-full max-w-4xl max-h-130 overflow-y-auto pr-2 custom-scrollbar border border-(--border)/30 dark:border-white/5 rounded-2xl p-2 bg-(--bg-surface)/30">
+  {/* Grid de Items */}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl" id="education-grid">
+    {EducationList.map((item) => {
+      const badge = getTypeBadge(item.type);
+      const BadgeIcon = badge.icon;
+
+      return (
+        <div
+          data-type={item.type}
+          class="edu-card relative p-5 rounded-2xl border border-(--border)/40 dark:border-white/5 bg-(--bg-surface) hover:bg-(--bg-card) hover:border-(--accent)/40 transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between gap-4 group overflow-hidden"
+        >
+          <div class="space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <span class={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs font-medium ${badge.color}`}>
+                <BadgeIcon class="w-3.5 h-3.5" />
+                {badge.label}
+              </span>
+              <span class="text-xs font-mono text-(--text-muted)">
+                {item.date}
+              </span>
+            </div>
+
+            <h3 class="text-base font-bold text-(--text) transition-colors">
+              {item.title}
+            </h3>
+            <p class="text-xs font-medium text-(--text-muted)">
+              {item.nameInstitucion}
+            </p>
+          </div>
+            <p class="text-xs sm:text-sm text-(--text-muted) leading-relaxed pt-1">
+              {item.description}
+            </p>
+
+          {/* Botón para ver certificado físico */}
+          {item.imgCertificate && (
+            <button
+              data-img={item.imgCertificate}
+              data-title={item.title}
+              class="open-cert-btn mt-2 inline-flex items-center justify-center gap-2 w-full px-3 py-2 rounded-xl border border-(--border) bg-(--bg) text-xs font-medium text-(--text-muted) hover:text-(--text) hover:border-(--accent) transition-all cursor-pointer"
+            >
+              <Eye class="w-4 h-4 text-(--accent)" />
+              Ver Certificado
+            </button>
+          )}
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+  {/* Modal de Visor de Certificado */}
+  <dialog id="cert-modal" class="p-0 bg-transparent backdrop:bg-black/80 backdrop:backdrop-blur-sm rounded-2xl max-w-2xl w-[90%] m-auto">
+    <div class="relative bg-(--bg-surface) border border-(--border) p-4 rounded-2xl shadow-2xl flex flex-col gap-3">
+      <div class="flex items-center justify-between border-b border-(--border) pb-3">
+        <h4 id="modal-title" class="text-sm font-bold text-(--text) truncate pr-4"></h4>
+        <button id="close-modal" class="p-1 rounded-lg hover:bg-(--bg-card) text-(--text-muted) hover:text-(--text) cursor-pointer">
+          <X class="w-5 h-5" />
+        </button>
+      </div>
+      <div class="overflow-hidden rounded-xl bg-black/5 flex items-center justify-center max-h-[70vh]">
+        <img id="modal-img" src="" alt="Certificado" class="object-contain max-h-[65vh] w-auto rounded-lg" />
+      </div>
+    </div>
+  </dialog>
+</section>
+
+<script>
+  // Script ejecutable en el cliente para Filtros y Modal
+  document.addEventListener('astro:page-load', initEducation);
+  document.addEventListener('DOMContentLoaded', initEducation);
+
+  function initEducation() {
+    // 1. Lógica de Filtros
+    const filterButtons = document.querySelectorAll('#filter-buttons button');
+    const cards = document.querySelectorAll('.edu-card');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        // Estilos de botones activos
+        filterButtons.forEach(b => {
+          b.classList.remove('active-filter', 'border-(--accent)', 'text-(--accent)');
+          b.classList.add('border-(--border)', 'text-(--text-muted)');
+        });
+
+        btn.classList.add('active-filter', 'border-(--accent)', 'text-(--accent)');
+        btn.classList.remove('border-(--border)', 'text-(--text-muted)');
+
+        // Ocultar/Mostrar tarjetas
+        cards.forEach(card => {
+          const type = card.getAttribute('data-type');
+          if (filter === 'all' || type === filter) {
+            (card as HTMLElement).style.display = 'flex';
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // 2. Lógica del Modal
+    const modal = document.getElementById('cert-modal') as HTMLDialogElement;
+    const modalImg = document.getElementById('modal-img') as HTMLImageElement;
+    const modalTitle = document.getElementById('modal-title');
+    const closeModal = document.getElementById('close-modal');
+    const openBtns = document.querySelectorAll('.open-cert-btn');
+
+    openBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const imgSrc = btn.getAttribute('data-img');
+        const title = btn.getAttribute('data-title');
+        
+        if (imgSrc && modalImg && modalTitle && modal) {
+          modalImg.src = imgSrc;
+          modalTitle.textContent = title || 'Certificado';
+          modal.showModal();
+        }
+      });
+    });
+
+    closeModal?.addEventListener('click', () => modal?.close());
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) modal.close();
+    });
+  }
+</script>

@@ -31,7 +31,7 @@ const getCategoryIcon = (index: number) => {
 
       return (
         <div 
-          class={`p-6 rounded-2xl border border-(--border) bg-(--bg-surface) hover:bg-(--bg-card) transition-all duration-300 shadow-xs flex flex-col justify-between ${
+          class={`relative p-5 rounded-2xl border border-(--border)/40 dark:border-white/5 bg-(--bg-surface) hover:bg-(--bg-card) hover:border-(--accent)/40 transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between gap-4 group overflow-hidden ${
             isSoftSkills ? "md:col-span-2 border-dashed border-(--accent-border)/60 bg-(--accent)/5" : ""
           }`}
         >
@@ -56,8 +56,8 @@ const getCategoryIcon = (index: number) => {
                 <div 
                   class={`inline-flex items-center gap-2.5 px-3 py-2 rounded-xl border text-xs sm:text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 ${
                     isSoftSkills 
-                      ? "border-(--accent-border) bg-(--bg) text-(--text) px-4 py-2.5 shadow-xs" 
-                      : "border-(--border) bg-(--bg) text-(--text-muted) hover:text-(--text) hover:border-(--accent)"
+                      ? "border-(--accent-border) bg-(--bg) text-(--text) px-4 py-2.5 shadow-xs hover:border-(--accent)" 
+                      : "border-(--accent-border) bg-(--bg) text-(--text-muted) hover:text-(--text) hover:border-(--accent)"
                   }`}
                 >
                   {/* Icono individual de SkillIcons */}

@@ -6,6 +6,7 @@ export interface WorkExperience {
   description: string[];
   tools: string[];
   isCurrent?: boolean;
+  logo?: string;
 }
 
 export const WORK_EXPERIENCES: WorkExperience[] = [
@@ -20,7 +21,8 @@ export const WORK_EXPERIENCES: WorkExperience[] = [
         "Instalacion de Sistemas Operativos.",
         "Optimizacion de software.",
       ],
-      tools: ["Linux", "Windows", "Redes"]
+      tools: ["Linux", "Windows", "Redes"],
+      logo: "/logoInstitutionals/labo.JPG"
     },
     {
       company: "Tribunal Electoral Departamental (TED)",
@@ -32,7 +34,8 @@ export const WORK_EXPERIENCES: WorkExperience[] = [
         "Entrega de certificados de impedimento a no votantes en las Elcciones Subnacionales..",
         "Manejó del sistema de impedimentos."
       ],
-      tools: ["VPN"]
+      tools: ["VPN"],
+      logo: "/logoInstitutionals/ted.JPG"
     },
     {
       company: "Seguro Social Universitario (SSU)",
@@ -45,7 +48,8 @@ export const WORK_EXPERIENCES: WorkExperience[] = [
         "Implementación de modulos de Consulta Externa, Laboratorio e Imagenologia.",
         "Trabajo con procedimientos almacenados almacenados"
       ],
-      tools: ["Yii2", "PHP", "JavaScript", "HTML/CSS", "PostgreSQL", "Bootstrap", "SQLServer"]
+      tools: ["Yii2", "PHP", "JavaScript", "HTML/CSS", "PostgreSQL", "Bootstrap", "SQLServer"],
+      logo: "/logoInstitutionals/ssu.JPG"
     }
 ];
   
