@@ -12,7 +12,7 @@
   --text-muted: var(--color-zinc-600);
 
   /* Bordes */
-  --border: var(--color-zinc-300\/80);
+  --border: var(--color-zinc-500);
 
   /* Acento por defecto (Esmeralda) */
   --accent: var(--color-emerald-500);
@@ -40,7 +40,7 @@
   --text-muted: var(--color-zinc-400);
 
   /* Bordes */
-  --border: var(--color-zinc-800\/80);
+  --border: var(--color-white);
 
   --bg-nav-active: var(--color-zinc-800);
   --text-nav-active: var(--color-white);
