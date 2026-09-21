@@ -1,0 +1,193 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { LIST_PROJECTS, type Project } from "../../data/proyects"; 
+import { Github, ExternalLink, ArrowLeft, Sparkles, FolderCode, CheckCircle2, HelpCircle, Lightbulb, GalleryHorizontal } from "lucide-astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+
+// Le dice a Astro qué páginas dinámicas generar en build time
+export async function getStaticPaths() {
+  return LIST_PROJECTS.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+<Layout 
+  title={`${project.title} | ${SITE_TITLE}`} 
+  description={project.description || SITE_DESCRIPTION}
+  hideNavbar={true}
+>
+  <main class="w-full max-w-3xl mx-auto px-4 py-12 flex flex-col gap-8">
+    
+    {/* Encabezado: Botón Volver + Badges + Título */}
+    <div class="space-y-4 border-b border-(--border)/30 dark:border-white/5 pb-6">
+        <a 
+        href="/" 
+        class="inline-flex items-center gap-2 text-xs font-mono text-(--text-muted) hover:text-(--accent) transition-colors py-1 px-3 rounded-lg border border-(--border)/30 dark:border-white/5 bg-(--bg-surface) w-fit"
+      >
+        <ArrowLeft class="w-3.5 h-3.5" />
+        <span>Inicio</span>
+      </a>
+      <a 
+        href="/projects" 
+        class="inline-flex items-center gap-2 text-xs font-mono text-(--text-muted) hover:text-(--accent) transition-colors py-1.5 px-3 rounded-xl border border-(--border)/30 dark:border-white/5 bg-(--bg-surface) w-fit"
+      >
+        <FolderCode class="w-3.5 h-3.5" />
+        <span>Proyectos</span>
+      </a>
+
+      <div class="space-y-2">
+        <div class="flex items-center gap-2">
+          {project.featured && (
+            <span class="ml-2 px-2 py-0.5 rounded-md border border-(--accent)/30 bg-(--accent)/10 text-(--accent) text-[10px] font-mono flex items-center gap-1">
+              <Sparkles class="w-3 h-3" />
+              Featured
+            </span>
+          )}
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-(--text)">
+          {project.title}
+        </h1>
+        
+        <p class="text-sm text-(--text-muted) leading-relaxed">
+          {project.description}
+        </p>
+      </div>
+
+      {/* Badges de Tecnologías */}
+      <div class="flex flex-wrap gap-1.5 pt-1">
+        {project.tags.map((tag) => (
+          <span class="text-[11px] font-mono px-2.5 py-1 rounded-md bg-(--bg) border border-(--border)/30 dark:border-white/5 text-(--text-muted)">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      {/* Botones de Links Externos (GitHub / Demo) */}
+      <div class="flex items-center gap-3 pt-2">
+        {project.githubUrl ? (
+          <a 
+            href={project.githubUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="px-4 py-2 rounded-xl border border-(--border)/30 dark:border-white/5 bg-(--bg-surface) hover:border-(--accent)/40 text-(--text) text-xs font-medium transition-all flex items-center gap-2"
+          >
+            <Github class="w-4 h-4" />
+            <span>Código en GitHub</span>
+          </a>
+        ) : (
+          <span class="text-xs font-mono text-(--text-muted)/60 italic">Código Privado</span>
+        )}
+
+        {project.demoUrl && (
+          <a 
+            href={project.demoUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="px-4 py-2 rounded-xl bg-(--accent) text-white text-xs font-medium hover:opacity-90 transition-opacity flex items-center gap-2 shadow-xs"
+          >
+            <ExternalLink class="w-4 h-4" />
+            <span>Ver Despliegue</span>
+          </a>
+        )}
+      </div>
+    </div>
+
+    {/* Vista previa visual (Imagen o Video) */}
+    <div class="w-full rounded-2xl overflow-hidden border border-(--border)/30 dark:border-white/5 bg-(--bg-surface)">
+      {project.previewVideo ? (
+        <video 
+          src={project.previewVideo} 
+          poster={project.image}
+          controls
+          muted 
+          loop 
+          playsinline
+          class="w-full h-auto max-h-105 object-cover"
+        />
+      ) : (
+        <img 
+          src={project.image} 
+          alt={project.title} 
+          class="w-full h-auto max-h-105 object-cover"
+        />
+      )}
+    </div>
+
+    {/* Sección Modesta de Detalles */}
+    <div class="space-y-8 pt-2">
+
+      {/* 1. Características */}
+      {project.properties && project.properties.length > 0 && (
+        <section class="space-y-3">
+          <h2 class="text-lg font-bold text-(--text) flex items-center gap-2">
+            <CheckCircle2 class="w-4 h-4 text-(--accent)" />
+            Características principales
+          </h2>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {project.properties.map((item) => (
+              <li class="p-3 rounded-xl border border-(--border)/30 dark:border-white/5 bg-(--bg-surface) text-xs text-(--text-muted) flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-(--accent) mt-1.5 shrink-0" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* 2. Qué problema resuelve */}
+      {project.solvedDescription && (
+        <section class="space-y-2 p-5 rounded-2xl border border-(--border)/30 dark:border-white/5 bg-(--bg-surface)">
+          <h2 class="text-base font-bold text-(--text) flex items-center gap-2">
+            <HelpCircle class="w-4 h-4 text-(--accent)" />
+            ¿Qué problema resuelve?
+          </h2>
+          <p class="text-xs sm:text-sm text-(--text-muted) leading-relaxed">
+            {project.solvedDescription}
+          </p>
+        </section>
+      )}
+
+      {/* 3. Decisiones de desarrollo */}
+      {project.decissions && (
+        <section class="space-y-2 p-5 rounded-2xl border border-(--border)/30 dark:border-white/5 bg-(--bg-surface)">
+          <h2 class="text-base font-bold text-(--text) flex items-center gap-2">
+            <Lightbulb class="w-4 h-4 text-(--accent)" />
+            Decisiones de desarrollo y arquitectura
+          </h2>
+          <p class="text-xs sm:text-sm text-(--text-muted) leading-relaxed">
+            {project.decissions}
+          </p>
+        </section>
+      )}
+
+        {project.gallery && project.gallery.length > 0 && (
+            <section class="space-y-4">
+            <h2 class="text-xl font-bold text-(--text) flex items-center gap-2">
+                <GalleryHorizontal class="w-4 h-4 text-(--accent)" />
+                Capturas del Sistema
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {project.gallery.map((imgUrl, index) => (
+                <div class="rounded-xl overflow-hidden border border-(--border)/30 dark:border-white/5 bg-(--bg)">
+                    <img 
+                    src={imgUrl} 
+                    alt={`Captura ${index + 1} de ${project.title}`} 
+                    class="w-full h-40 object-cover hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    />
+                </div>
+                ))}
+            </div>
+            </section>
+        )}
+    </div>
+  </main>
+</Layout>
