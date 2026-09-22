@@ -36,7 +36,7 @@ export const WORK_EXPERIENCES: WorkExperience[] = [
         "Entrega de certificados de impedimento a no votantes en las Elcciones Subnacionales Departamentales 2026.",
         "Trabajo junto a actas y el sistema de impedimentos."
       ],
-      tools: ["VPN"],
+      tools: ["VPN", "Comunicación y atención"],
       logo: "/logoInstitutionals/ted.JPG"
     },
     {
@@ -49,7 +49,7 @@ export const WORK_EXPERIENCES: WorkExperience[] = [
         "Transmición los resultados preeliminares del conteo rapido de las actas en un recinto electoral.",
         "Trabajo junto a la aplicación SIREPRE para enviar los datos a la sede en La Paz."
       ],
-      tools: ["Aplicación movil"],
+      tools: [""],
       logo: "/logoInstitutionals/sereci.JPG"
     },
     {
