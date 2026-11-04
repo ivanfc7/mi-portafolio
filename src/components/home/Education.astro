@@ -80,7 +80,7 @@ const getTypeBadge = (type: EducationType) => {
           {/* Botón para ver certificado físico */}
           {item.imgCertificate && (
             <button
-              data-img={item.imgCertificate}
+              data-img={`${import.meta.env.BASE_URL}/${item.imgCertificate.replace(/^\//, '')}`}
               data-title={item.title}
               class="open-cert-btn mt-2 inline-flex items-center justify-center gap-2 w-full px-3 py-2 rounded-xl border border-(--border) bg-(--bg) text-xs font-medium text-(--text-muted) hover:text-(--text) hover:border-(--accent) transition-all cursor-pointer"
             >
@@ -158,7 +158,7 @@ const getTypeBadge = (type: EducationType) => {
         const title = btn.getAttribute('data-title');
         
         if (imgSrc && modalImg && modalTitle && modal) {
-          modalImg.src = imgSrc;
+          modalImg.src = imgSrc; // Ya lleva el BASE_URL incluido desde el atributo data-img
           modalTitle.textContent = title || 'Certificado';
           modal.showModal();
         }

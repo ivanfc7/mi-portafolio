@@ -37,7 +37,7 @@ import { Calendar, MapPin, Building2 } from "lucide-astro";
               {job.logo ? (
                 <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl border border-(--border)/40 dark:border-white/10 bg-(--bg) p-2 flex items-center justify-center shrink-0 shadow-xs group-hover:border-(--accent)/40 transition-colors">
                   <img 
-                    src={`${import.meta.env.BASE_URL}/job.logo`} 
+                    src={`${import.meta.env.BASE_URL}/${job.logo.replace(/^\//, '')}`}
                     alt={`Logo de ${job.company}`} 
                     class="w-full h-full object-contain"
                     loading="lazy"
